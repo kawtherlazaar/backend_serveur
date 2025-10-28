@@ -1,12 +1,12 @@
-require('dotenv').config();
+require("dotenv").config();
 const connectDB=require('./db/connect');
 const express = require('express');
 const app=express();
-const PORT=process.env.PORT||3000
+const port=process.env.PORT||3000
 app.use(express.json());
-const Article =require('./models/article');
+//const Article =require('./models/article');
 const { connect } = require('mongoose');
-
+app.use('/articles' , require('./routes/articleroutes'));
 // Importer mongoose et la fonction de connexion
 //const mongoose = require('mongoose');
 
