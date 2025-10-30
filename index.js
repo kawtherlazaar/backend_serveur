@@ -22,4 +22,3 @@ connectDB(process.env.MONGODB_URI)
     .catch((error) => {
         console.error('Error connecting to MongoDB mongo:', error);
     });
-
