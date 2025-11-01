@@ -1,4 +1,4 @@
-# TP Postman – API Express.js
+#  API Express.js – Data Persistence –CRUD Operations
 ###  Objective of TP
 ---
 
@@ -29,7 +29,7 @@ We use:
 
 ## Implementation steps
 
-### Step 1: Create the Project
+### Step 1 : Create the Project
 
 I open a new folder with name <u>*backend_serveur*</u>. 
 Then, in the terminal, i type:
@@ -39,7 +39,7 @@ cd  backend_serveur
 npm init -y 
 ``` 
 🔹This command creates the **package.json**  file to store the project information .
-### Step 2: Download the required library
+### Step 2 : Download the required library
 In the terminal  i type:
 ```
  npm install express mongoose dotenv
@@ -47,7 +47,7 @@ In the terminal  i type:
 🔹 Express → to create the server  
 🔹 Mongoose → to work with the MongoDB database  
 🔹 Dotenv → to load environment variables `.env`  
-### Step 3: I create this structure
+### Step 3 : I create this structure
 ```
 backend_server/ 
 │
@@ -68,7 +68,8 @@ backend_server/
 ├── .gitignore 
 └── README.md 
 ```
-### Step 4:setting up a database connection 
+### Step 4 : setting up a database connection 
+
 📁 db/connect.js
 ```// Importer mongoose
 const mongoose = require('mongoose');
@@ -81,7 +82,32 @@ const connectDB = (MONGODB_URI )=> {
 // Exporter la fonction
 module.exports = connectDB;
 ```
-### Step 5:controllers setting 
+🔹 This code is used to **connect to a MongoDB database** using the **mongoose** library , and then **export the**   connectDB **function** so it can be used in other files of the project .
+### Step 5 : setting up a database connection 
+
+📁 models/article.js
+```
+const mongoose = require('mongoose');
+const articleSchema = new mongoose.Schema({
+  titer: {
+    type: String,
+    required: [true, 'Please provide title']
+  },
+  contenue: {
+    type: String,
+    required: [true, 'Please provide content']
+  },
+  imageUrl: {
+    type: String
+  }
+});
+
+module.exports = mongoose.model('Article', articleSchema);
+
+```
+🔹This code creates a Mongoose schema for an "Article" model with tree fiedls :**title** , **content**  and **imageUrl** .
+
+### Step 6 : controllers setting 
  📁controllers/articlecontroller.js
  ```const article=require('../models/article');
 const getALLArticles =async(req,res) =>{
@@ -125,7 +151,7 @@ module.exports = {
   createArticle
 }
 ```
-### Step 5:Routes setting
+### Step 7 :Routes setting
 📁 routes/articleroutes.js
 ```
 const express= require('express');
@@ -135,7 +161,7 @@ router.post('/',createArticle);
 module.exports=express.Router();
 
 ```
-### Step 5: index.js setting
+### Step 8 : index.js setting
 📄 index.js 
 ```
 require("dotenv").config();
@@ -163,8 +189,23 @@ connectDB(process.env.MONGODB_URI)
         console.error('Error connecting to MongoDB mongo:', error);
     });
 ```
+### Step 9 :   .env setting
 📄  .env 
 ```env 
 MONGO_URI=mongodb+srv://<my_user_name>:<my_password>@cluster.mongodb.net/blog 
 PORT=3000 
 ``` 
+### Step 10 :   .gitignore setting
+📄  .gitignore
+```
+.env/
+node_modules
+```
+### Step 11 :   Run the project
+I open the terminal and because i already installed the **nodemon** ,I type directly :
+```
+nodemon index.js
+```
+then I click on the server  👉 [http://localhost:3000/articles](http://localhost:3000/articles)
+---
+
